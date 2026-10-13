@@ -8,7 +8,7 @@
 }
 
 .inicio-background {
-  background-image: url('/public/img/ini2.jpg');
+  background-image: url('/img/ini2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -18,7 +18,7 @@
 
 
 .background-image {
-  background-image: url('/public/img/art.avif');
+  background-image: url('/img/art.avif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
