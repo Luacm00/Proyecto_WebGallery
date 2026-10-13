@@ -49,20 +49,20 @@ const Footer = () => {
             <p>Email: contacto@webgallery.com</p>
             <p>Teléfono: +123 456 789</p>
             <div className="d-flex">
-              <Link to="#" className="text-light me-3">
-                <i className="fab fa-facebook-f"></i>
-              </Link>
-              <Link to="#" className="text-light me-3">
-                <i className="fab fa-twitter"></i>
-              </Link>
-              <Link to="#" className="text-light">
-                <i className="fab fa-instagram"></i>
-              </Link>
+              <a
+                href="https://github.com/Luacm00"
+                className="text-light fs-4"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
+                <i className="fab fa-github"></i>
+              </a>
             </div>
           </div>
         </div>
         <div className="text-center mt-4">
-          <p>&copy; 2024 Web Gallery. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Web Gallery. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

@@ -10,10 +10,10 @@ const Nosotros = () => {
           <h2 className="display-3 fw-bold">Nosotros</h2>
           <br />
           <h5 className="fw-normal fst-italic text-muted mb-3">
-            Somos una galería que busca impulsar el taleento de los que no
+            Somos una galería que busca impulsar el talento de los que no
             pueden dar a mostrar sus obras a todo el público, además damos
             información sobre algunas técnicas de arte más vistas en nuestra
-            galeria, esperamos disfrutes nuestro contenido!!
+            galería. ¡Esperamos disfrutes nuestro contenido!
           </h5>
           <h6 className="fst-italic">Equipo de Web Gallery</h6>
         </div>

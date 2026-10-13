@@ -12,7 +12,7 @@ const ImageModal = ({ show, handleClose, image }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Close
+          Cerrar
         </Button>
       </Modal.Footer>
     </Modal>

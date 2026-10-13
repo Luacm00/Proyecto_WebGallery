@@ -11,31 +11,27 @@ import Acrilico from "./componentes/categorias/Acrilico";
 import Vinilo from "./componentes/categorias/Vinilo";
 import Carboncillo from "./componentes/categorias/Carboncillo";
 import TizasPastel from "./componentes/categorias/TizasPastel";
+import NotFound from "./componentes/NotFound";
 
 import "./App.css";
 
 const App = () => {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="d-flex flex-column min-vh-100">
         <Navbar />
         <div className="flex-grow-1">
           <Routes>
             <Route path="/" element={<Inicio />} />
-            <Route path="/Categorias.js" element={<Categorias />} />
-            <Route path="/Tecnicas.js" element={<Tecnicas />} />
-            <Route path="/categorias/Oleo.js" element={<Oleo />} />
-            <Route path="/categorias/Acrilico.js" element={<Acrilico />} />
-            <Route path="/categorias/Vinilo.js" element={<Vinilo />} />
-            <Route
-              path="/categorias/Carboncillo.js"
-              element={<Carboncillo />}
-            />
-            <Route
-              path="/categorias/TizasPastel.js"
-              element={<TizasPastel />}
-            />
-            <Route path="/Nosotros.js" element={<Nosotros />} />
+            <Route path="/categorias" element={<Categorias />} />
+            <Route path="/tecnicas" element={<Tecnicas />} />
+            <Route path="/categorias/oleo" element={<Oleo />} />
+            <Route path="/categorias/acrilico" element={<Acrilico />} />
+            <Route path="/categorias/vinilo" element={<Vinilo />} />
+            <Route path="/categorias/carboncillo" element={<Carboncillo />} />
+            <Route path="/categorias/tizas-pastel" element={<TizasPastel />} />
+            <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <Footer />

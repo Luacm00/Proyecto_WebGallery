@@ -54,19 +54,19 @@ const Tecnicas = () => {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <i className="bi bi-list"></i> Toggle Sidebar
+              <i className="bi bi-list"></i> Menú de técnicas
             </button>
             <div className="d-flex flex-column align-items-center">
               <h1 className="display-3 text-center fw-bold mb-5">Técnicas</h1>
 
               {/* Técnica Óleo */}
-              <section id="oleo" className="mb-5">
+              <section id="oleo" className="mb-5 w-100">
                 <div className="card">
                   <img
                     src="/img/t-oleo.webp"
                     className="card-img-top"
                     alt="Óleo"
-                    style={{ width: "1040px", height: "400px" }}
+                    style={{ height: "400px", objectFit: "cover" }}
                   />
                   <div className="card-body">
                     <h5 className="card-title">Óleo</h5>
@@ -90,13 +90,13 @@ const Tecnicas = () => {
               </section>
 
               {/* Técnica Acrílico */}
-              <section id="acrilico" className="mb-5">
+              <section id="acrilico" className="mb-5 w-100">
                 <div className="card">
                   <img
                     src="/img/t-acrilico.jpg"
                     className="card-img-top"
                     alt="Acrílico"
-                    style={{ width: "1040px", height: "400px" }}
+                    style={{ height: "400px", objectFit: "cover" }}
                   />
                   <div className="card-body">
                     <h5 className="card-title">Acrílico</h5>
@@ -121,13 +121,13 @@ const Tecnicas = () => {
               </section>
 
               {/* Técnica Vinilo */}
-              <section id="vinilo" className="mb-5">
+              <section id="vinilo" className="mb-5 w-100">
                 <div className="card">
                   <img
                     src="/img/t-vinilo.jpg"
                     className="card-img-top"
                     alt="Vinilo"
-                    style={{ width: "1040px", height: "400px" }}
+                    style={{ height: "400px", objectFit: "cover" }}
                   />
                   <div className="card-body">
                     <h5 className="card-title">Vinilo</h5>
@@ -151,13 +151,13 @@ const Tecnicas = () => {
               </section>
 
               {/* Técnica Carboncillo */}
-              <section id="carboncillo" className="mb-5">
+              <section id="carboncillo" className="mb-5 w-100">
                 <div className="card">
                   <img
                     src="/img/t-carbon.png"
                     className="card-img-top"
                     alt="Carboncillo"
-                    style={{ width: "1040px", height: "400px" }}
+                    style={{ height: "400px", objectFit: "cover" }}
                   />
                   <div className="card-body">
                     <h5 className="card-title">Carboncillo</h5>
@@ -181,13 +181,13 @@ const Tecnicas = () => {
               </section>
 
               {/* Técnica Tizas Pastel */}
-              <section id="tizas" className="mb-5">
+              <section id="tizas" className="mb-5 w-100">
                 <div className="card">
                   <img
                     src="/img/t-tizas.jpg"
                     className="card-img-top"
                     alt="Tizas Pastel"
-                    style={{ width: "1040px", height: "400px" }}
+                    style={{ height: "400px", objectFit: "cover" }}
                   />
                   <div className="card-body">
                     <h5 className="card-title">Tizas Pastel</h5>

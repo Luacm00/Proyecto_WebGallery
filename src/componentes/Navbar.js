@@ -25,38 +25,37 @@ const Navbar = () => {
             style={{ maxHeight: "100px" }}
           >
             <li className="nav-item">
-              <Link className="nav-link btn btn-outline-dark me-2" aria-current="page" to="/">
+              <Link className="nav-link btn btn-outline-dark me-2" to="/">
                 Inicio
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link btn btn-outline-dark me-2" aria-current="page" to="/Tecnicas.js">
+              <Link className="nav-link btn btn-outline-dark me-2" to="/tecnicas">
                 Técnicas
               </Link>
             </li>
             <li className="nav-item dropdown">
-              <Link
+              <button
                 className="nav-link dropdown-toggle btn btn-outline-dark me-2"
-                href="#"
-                role="button"
+                type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Técnicas
-              </Link>
+                Categorías
+              </button>
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="./categorias/Oleo.js">
+                  <Link className="dropdown-item" to="/categorias/oleo">
                     Óleo
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="./categorias/Acrilico.js">
-                    Acrilico
+                  <Link className="dropdown-item" to="/categorias/acrilico">
+                    Acrílico
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="./categorias/Vinilo.js">
+                  <Link className="dropdown-item" to="/categorias/vinilo">
                     Vinilo
                   </Link>
                 </li>
@@ -64,19 +63,19 @@ const Navbar = () => {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="./categorias/Carboncillo.js">
+                  <Link className="dropdown-item" to="/categorias/carboncillo">
                     Carboncillo
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="./categorias/TizasPastel.js">
+                  <Link className="dropdown-item" to="/categorias/tizas-pastel">
                     Tizas Pastel
                   </Link>
                 </li>
               </ul>
             </li>
             <li className="nav-item">
-              <Link className="nav-link btn btn-outline-dark" aria-current="page" to="./Nosotros.js">
+              <Link className="nav-link btn btn-outline-dark" to="/nosotros">
                 Nosotros
               </Link>
             </li>

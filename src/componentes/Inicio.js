@@ -21,12 +21,12 @@ const Inicio = () => {
       <br />
 
       <div className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center custom-margin-bottom bienvenido-background">
-        <div class="card border-0 bg-transparent">
-          <div class="card-body">
-            <h3 class="card-title">Bienvenido!</h3>
-            <p class="card-text">
+        <div className="card border-0 bg-transparent">
+          <div className="card-body">
+            <h3 className="card-title">¡Bienvenido!</h3>
+            <p className="card-text">
               Esperamos que seas un amante más del arte y disfrutes nuestro
-              contenido, te invitamos a deguir explorando nuestras categorías
+              contenido, te invitamos a seguir explorando nuestras categorías
               para ver maravillosas obras de arte.
             </p>
           </div>
@@ -46,26 +46,12 @@ const Inicio = () => {
                 alt="Técnica: óleo"
               />
             </div>
-            <div id="tecnicas" className="carousel-caption d-none d-md-block">
-              <h3 className="fw-bold text-black">Técnicas</h3>
-              <p className="fw-medium text-bg-light">
-                Aquí encontraras información sobre las diferentes técnicas más
-                usadas en nuestra galeria.
-              </p>
-            </div>
             <div className="carousel-item">
               <img
                 src="/img/t2.jpg"
                 className="d-block w-100 carousel-img-fixed"
                 alt="Técnica: Vinilo"
               />
-            </div>
-            <div id="tecnicas" className="carousel-caption d-none d-md-block">
-              <h3 className="fw-bold text-black">Técnicas</h3>
-              <p className="fw-medium text-bg-light">
-                Aquí encontraras información sobre las diferentes técnicas más
-                usadas en nuestra galeria.
-              </p>
             </div>
             <div className="carousel-item">
               <img
@@ -77,8 +63,8 @@ const Inicio = () => {
             <div id="tecnicas" className="carousel-caption d-none d-md-block">
               <h3 className="fw-bold text-black">Técnicas</h3>
               <p className="fw-medium text-bg-light">
-                Aquí encontraras información sobre las diferentes técnicas más
-                usadas en nuestra galeria.
+                Aquí encontrarás información sobre las diferentes técnicas más
+                usadas en nuestra galería.
               </p>
             </div>
           </div>
@@ -108,7 +94,7 @@ const Inicio = () => {
           </button>
         </div>
         <div className="d-grid gap-2 d-md-flex my-2 justify-content-md-end">
-          <Link class="btn btn-outline-dark" to="./Tecnicas.js" role="buttom">
+          <Link className="btn btn-outline-dark" to="/tecnicas">
             Ver más
           </Link>
         </div>
@@ -117,49 +103,49 @@ const Inicio = () => {
       <br />
 
       {/*Seccion de Categorias*/}
-      <div className="contenedor-categorias">
+      <div className="contenedor-categorias container-fluid">
         <div className="col-md-12 p-lg-5 mx-auto my-3">
           <div id="categorias" className="mt-5">
-            <h2 className="fw-bold">Categorias</h2>
+            <h2 className="fw-bold">Categorías</h2>
             <p className="p-md-4">
-              Aquí puedes explorar las diferentes categorias de arte que hay en
-              nuestra galeria.
+              Aquí puedes explorar las diferentes categorías de arte que hay en
+              nuestra galería.
             </p>
           </div>
         </div>
         <div className="row my-lg-3 p-3">
           <div className="col-sm-4 mb-3 mb-sm-0">
-            <div className="card width: 18rem;">
+            <div className="card">
               <img
                 src="/img/oleo.jpg"
-                class="card-img-top card-img-fixed"
+                className="card-img-top card-img-fixed"
                 alt="Óleo"
               />
               <div className="card-body">
                 <p className="card-text">
-                  Aqui encontraras algunas obras empleando la técnica del óleo.
+                  Aquí encontrarás algunas obras empleando la técnica del óleo.
                 </p>
-                <Link to="./categorias/Oleo.js" class="btn btn-outline-dark">
+                <Link to="/categorias/oleo" className="btn btn-outline-dark">
                   Ver más
                 </Link>
               </div>
             </div>
           </div>
           <div className="col-sm-4">
-            <div className="card width: 18rem;">
+            <div className="card">
               <img
                 src="/img/acril.webp"
-                class="card-img-top card-img-fixed"
-                alt="Acrilico"
+                className="card-img-top card-img-fixed"
+                alt="Acrílico"
               />
               <div className="card-body">
                 <p className="card-text">
-                  Aqui encontraras algunas obras empleando la técnica del
-                  acrilico.
+                  Aquí encontrarás algunas obras empleando la técnica del
+                  acrílico.
                 </p>
                 <Link
-                  to="./categorias/Acrilico.js"
-                  class="btn btn-outline-dark"
+                  to="/categorias/acrilico"
+                  className="btn btn-outline-dark"
                 >
                   Ver más
                 </Link>
@@ -167,20 +153,20 @@ const Inicio = () => {
             </div>
           </div>
           <div className="col-sm-4">
-            <div className="card width: 18rem;">
+            <div className="card">
               <img
                 src="/img/vinil.jpg"
-                class="card-img-top card-img-fixed"
+                className="card-img-top card-img-fixed"
                 alt="Vinilo"
               />
               <div className="card-body">
                 <p className="card-text">
-                  Aqui encontraras algunas obras empleando la técnica del
+                  Aquí encontrarás algunas obras empleando la técnica del
                   vinilo.
                 </p>
                 <Link
-                  to="./categorias/Vinilo.js"
-                  class="btn btn-outline-dark"
+                  to="/categorias/vinilo"
+                  className="btn btn-outline-dark"
                 >
                   Ver más
                 </Link>
@@ -190,20 +176,20 @@ const Inicio = () => {
         </div>
         <div className="row my-lg-5 p-3">
           <div className="col-sm-4 mb-3 mb-sm-0">
-            <div className="card width: 18rem;">
+            <div className="card">
               <img
                 src="/img/carbon.avif"
-                class="card-img-top card-img-fixed"
+                className="card-img-top card-img-fixed"
                 alt="Carboncillo"
               />
               <div className="card-body">
                 <p className="card-text">
-                  Aqui encontraras algunas obras empleando la técnica del
+                  Aquí encontrarás algunas obras empleando la técnica del
                   carboncillo.
                 </p>
                 <Link
-                  to="./categorias/Carboncillo.js"
-                  class="btn btn-outline-dark"
+                  to="/categorias/carboncillo"
+                  className="btn btn-outline-dark"
                 >
                   Ver más
                 </Link>
@@ -211,20 +197,20 @@ const Inicio = () => {
             </div>
           </div>
           <div className="col-sm-4">
-            <div className="card width: 18rem;">
+            <div className="card">
               <img
                 src="/img/tizas.jpg"
-                class="card-img-top card-img-fixed"
+                className="card-img-top card-img-fixed"
                 alt="Tizas Pastel"
               />
               <div className="card-body">
                 <p className="card-text">
-                  Aqui encontraras algunas obras empleando la técnica de las
+                  Aquí encontrarás algunas obras empleando la técnica de las
                   tizas pastel.
                 </p>
                 <Link
-                  to="./categorias/TizasPastel.js"
-                  class="btn btn-outline-dark"
+                  to="/categorias/tizas-pastel"
+                  className="btn btn-outline-dark"
                 >
                   Ver más
                 </Link>

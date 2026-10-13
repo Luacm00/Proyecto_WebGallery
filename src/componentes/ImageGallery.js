@@ -18,14 +18,15 @@ const ImageGallery = ({ images }) => {
   return (
     <div className="container">
       <div className="row">
-        {images.map((image, index) => (
-          <div className="col-md-4 mb-4" key={index}>
+        {images.map((image) => (
+          <div className="col-md-4 mb-4" key={image.src}>
             <div className="card h-100">
               <img
                 src={image.src}
                 className="card-img-top"
                 alt={image.caption}
-                style={{ width: "auto", height: "400px", cursor: "pointer" }}
+                style={{ height: "400px", objectFit: "cover", cursor: "pointer" }}
+                loading="lazy"
                 onClick={() => handleShow(image)}
               />
               <div className="card-body">

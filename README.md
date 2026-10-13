@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Web Gallery
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Galería de arte web hecha con React. Reúne obras en cinco técnicas (óleo, acrílico, vinilo, carboncillo y tizas pastel) y explica cada una: qué es, cómo se emplea y qué materiales necesita.
 
-## Available Scripts
+**Demo:** [proyectowebgallery.netlify.app](https://proyectowebgallery.netlify.app/)
 
-In the project directory, you can run:
+![Página de inicio de Web Gallery](docs/inicio.webp)
 
-### `npm start`
+## Funcionalidades
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Galería por técnica con visor de imagen ampliada (modal).
+- Página de técnicas con navegación lateral a cada sección.
+- Carrusel de técnicas y tarjetas de categorías en el inicio.
+- Diseño responsive: navegación colapsable y galerías adaptadas a móvil.
+- Rutas limpias con React Router, página 404 y redirecciones de URLs antiguas.
+- Cabeceras de seguridad en producción (Content Security Policy, `X-Frame-Options`, `nosniff`, etc.).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Capturas
 
-### `npm test`
+| Galería | Técnicas | Móvil |
+| --- | --- | --- |
+| ![Galería de óleo](docs/galeria.webp) | ![Página de técnicas](docs/tecnicas.webp) | ![Vista móvil](docs/movil.webp) |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tecnologías
 
-### `npm run build`
+- [React 18](https://react.dev) (Create React App)
+- [React Router 6](https://reactrouter.com)
+- [Bootstrap 5](https://getbootstrap.com) y [React Bootstrap](https://react-bootstrap.github.io)
+- Font Awesome y Bootstrap Icons
+- [Netlify](https://www.netlify.com) para el despliegue continuo
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Ejecutar localmente
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Requiere Node.js 18 o superior.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone https://github.com/Luacm00/Proyecto_WebGallery.git
+cd Proyecto_WebGallery
+npm install
+npm start          # http://localhost:3000
+```
 
-### `npm run eject`
+| Comando | Descripción |
+| --- | --- |
+| `npm start` | Servidor de desarrollo con recarga automática. |
+| `npm test` | Ejecuta los tests. |
+| `npm run build` | Genera la versión de producción en `build/`. |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Estructura
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```text
+public/
+  img/                  Imágenes de las obras y técnicas
+src/
+  App.js                Definición de rutas
+  componentes/
+    Navbar.js, Footer.js
+    Inicio.js           Página principal
+    Tecnicas.js         Descripción de cada técnica
+    ImageGallery.js     Cuadrícula de obras + ImageModal.js
+    categorias/         Una página por técnica
+netlify.toml            Build, redirecciones y cabeceras de seguridad
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Despliegue
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+El sitio se publica en Netlify automáticamente con cada push a `master`. La configuración está en [`netlify.toml`](netlify.toml).
 
-## Learn More
+## Próximos pasos
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+El plan de mejoras (rendimiento, diseño y accesibilidad) está en [MEJORAS.md](MEJORAS.md).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Créditos
 
-### Code Splitting
+Las imágenes de las obras se usan con fines educativos y pertenecen a sus respectivos autores.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Hecho por [Luacm00](https://github.com/Luacm00).

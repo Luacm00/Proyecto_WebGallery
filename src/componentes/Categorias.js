@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 const Categorias = () => {
     return (
         <div className="container mt-5">
-            <h1>Categorias</h1>
+            <h1>Categorías</h1>
             <ul>
-                <li><Link to="./categorias/Oleo.js">Óleo</Link></li>
-                <li><Link to="./categorias/Acrilico.js">Acrilico</Link></li>
-                <li><Link to="./categorias/Vinilo.js">Vinilo</Link></li>
-                <li><Link to="./categorias/Carboncillo.js">Carboncillo</Link></li>
-                <li><Link to="./categorias/TizasPastel.js">Tizas Pastel</Link></li>
+                <li><Link to="/categorias/oleo">Óleo</Link></li>
+                <li><Link to="/categorias/acrilico">Acrílico</Link></li>
+                <li><Link to="/categorias/vinilo">Vinilo</Link></li>
+                <li><Link to="/categorias/carboncillo">Carboncillo</Link></li>
+                <li><Link to="/categorias/tizas-pastel">Tizas Pastel</Link></li>
             </ul>
         </div>
     )
