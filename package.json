@@ -3,7 +3,8 @@
   "private": true,
   "packageManager": "pnpm@11.23.0",
   "scripts": {
-    "dev": "pnpm --filter web dev",
-    "build": "pnpm --filter web build"
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm --filter web build",
+    "deploy:api": "pnpm --filter api run deploy"
   }
 }

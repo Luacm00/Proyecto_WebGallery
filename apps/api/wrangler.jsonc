@@ -1,0 +1,15 @@
+// Configuarcion del worker
+
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "webgallery-api",
+  "main": "src/index.ts",
+  // Fija el comportamiento del runtime a esta fecha: actualizaciones de
+  // Cloudflare no cambian tu Worker sin que tú lo decidas.
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true }, //logs visibles en el panel
+  "vars": {
+    // Variables NO secretas. Los secretos van con `wrangler secret put`.
+    "ALLOWED_ORIGINS": "http://localhost:3000,https://webgallery-2bc.pages.dev",
+  }
+}
