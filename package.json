@@ -6,5 +6,8 @@
     "dev": "pnpm -r --parallel dev",
     "build": "pnpm --filter web build",
     "deploy:api": "pnpm --filter api run deploy"
+  },
+  "devDependencies": {
+    "supabase": "^2.120.0"
   }
 }

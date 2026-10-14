@@ -1,0 +1,1 @@
+pnpm exec supabase db reset
