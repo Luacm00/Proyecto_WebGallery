@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
-        width:
+        with:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile # instala la CLI de Supabase (misma versión que en tu equipo)
