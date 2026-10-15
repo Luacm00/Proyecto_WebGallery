@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [master] # cada push a producción
+  pull_request: # cada PR (y cada push nuevo a la rama del PR)
+  workflow_dispatch: # un botón "Run workflow" para ejecutarlo a mano
+
+# Si haces 2 push seguidos a la misma rama, cancela la ejecución vieja (ahorra minutos).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Mínimo privilegio: el CI solo necesita leer el código.
+permissions:
+  contents: read
+
+jobs:
+  web:
+    name: Web · build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # si algo se cuelga, no consume minutos indefinidamente
+    steps:
+      - uses: actions/checkout@v5 # descarga el repo
+      - uses: pnpm/action-setup@v4 # instala pnpm (lee la versión de "packageManager")
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm #reutiliza paquetes entre ejecuciones: más rápido
+      - run: pnpm install --frozen-lockfile #falla si pnpm-lock.yml no coincide con package.json
+      - run: pnpm --filter web build
+
+  api:
+    name: API · typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5 # descarga el repo
+      - uses: pnpm/action-setup@v4 # instala pnpm (lee la versión de "packageManager")
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm #reutiliza paquetes entre ejecuciones: más rápido
+      - run: pnpm install --frozen-lockfile #falla si pnpm-lock.yml no coincide con package.json
+      - run: pnpm --filter api typecheck
+
+  db:
+    name: DB · pruebas RLS
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        width:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile # instala la CLI de Supabase (misma versión que en tu equipo)
+      - run: pnpm exec supabase db start # solo Postgres: aplica migraciones + seed.sql
+      - run: pnpm exec supabase test db # las 12 pruebas
