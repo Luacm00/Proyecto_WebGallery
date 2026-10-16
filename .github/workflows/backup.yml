@@ -33,13 +33,21 @@ jobs:
 
       - name: Exportar roles, esquema y datos
         env:
-          DB_URL: ${{ secrets.BACKUP_PASSPHRASE }}
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          supabase db dump --db-url "$DB_URL" -f roles.sql  --role-only
+          supabase db dump --db-url "$DB_URL" -f schema.sql
+          supabase db dump --db-url "$DB_URL" -f data.sql   --data-only --use-copy
+
+      - name: Comprimir y cifrar (AES-256)
+        env:
+          PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
         run: |
           STAMP=$(date -u +%Y-%m-%d)
           tar -czf "backup-$STAMP.tar.gz" roles.sql schema.sql data.sql
-          # La contraseña entra por stdin (--passphrase-fd 0): nunca aparece en la linea de comandos.
-          printf '%' "$PASSPHRASE" | gpg --batch --yes --pinetry-mode loopback \
-            --passphrase-fd 0 --symetric --cipher-algo AES256 \
+          # La contraseña entra por stdin (--passphrase-fd 0): nunca aparece en la línea de comandos.
+          printf '%s' "$PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback \
+            --passphrase-fd 0 --symmetric --cipher-algo AES256 \
             -o "backup-$STAMP.tar.gz.gpg" "backup-$STAMP.tar.gz"
           # Borra las copias sin cifrar antes de subir nada.
           rm -f roles.sql schema.sql data.sql "backup-$STAMP.tar.gz"
@@ -49,5 +57,5 @@ jobs:
         with:
           name: db-backup-${{ env.STAMP }}
           path: backup-*.tar.gz.gpg
-          retention-days: 56 # 8 semanas; los más viejos de borran solos
+          retention-days: 56 # 8 semanas; los más viejos se borran solos
           if-no-files-found: error # si no hay archivo, el backup falló: que se note
