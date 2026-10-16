@@ -1,0 +1,27 @@
+// Configuarcion del worker
+
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Entorno por defecto = desarrollo local (wrangler dev)
+  "name": "webgallery-api-dev",
+  "main": "src/index.ts",
+  // Fija el comportamiento del runtime a esta fecha: actualizaciones de
+  // Cloudflare no cambian tu Worker sin que tú lo decidas.
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true }, //logs visibles en el panel
+  "vars": {
+    // Variables NO secretas. Los secretos van con `wrangler secret put`.
+    "ALLOWED_ORIGINS": "http://localhost:3000,https://webgallery-2bc.pages.dev",
+  },
+
+  "env": {
+    "production": {
+      // Mismo nombre que el worker actual -> misma URL, no se crea uno nuevo
+      "name": "webgallery-api",
+      // Las vars NO se heredan: se declaran completas. Sin localhost.
+      "vars": {
+        "ALLOWED_ORIGINS": "https://webgallery-2bc.pages.dev",
+      },
+    },
+  },
+}

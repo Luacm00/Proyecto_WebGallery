@@ -1,0 +1,35 @@
+name: Keep-alive
+
+on:
+  schedule:
+    - cron: "0 12 * * *" # diario, 7:00 a.m. Colombia
+  workflow_dispatch:
+  pull_request:
+    paths: [".github/workflows/keep-alive.yml"] # para probarlo antes del merge
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    name: Ping Supabase y API
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Consulta liviana a Supabase
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        # --fail: si responde 4xx/5xx, el paso falla (y GitHub avisa)
+        # --retry: reintenta ante fallos de red momentaneos antes de dar alarma
+        run: |
+          curl --fail --silent --show-error --max-time 30 --retry 3 --retry-delay 10 \
+            "$SUPABASE_URL/rest/v1/categories?select=slug&limit=1" \
+            -H "apikey: $SUPABASE_KEY"
+
+      - name: Salud de la API
+        env:
+          API_URL: ${{ vars.API_URL }}
+        run: |
+          curl --fail --silent --show-error --max-time 30 --retry 3 --retry-delay 10 \
+            "$API_URL/health"
