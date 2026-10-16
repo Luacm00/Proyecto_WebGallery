@@ -1,0 +1,53 @@
+# Backup semanal cifrado de la base de datos de producción.
+#
+# RESTAURAR (en el equipo, con Git Bash):
+#   1. Actions → "Backup DB" → descarga el artifact (zip) y descomprímelo
+#   2. gpg --decrypt backup-AAAA-MM-DD.tar.gz.gpg > backup.tar.gz   (pide BACKUP_PASSPHRASE)
+#   3. tar -xzf backup.tar.gz      → roles.sql, schema.sql, data.sql
+name: Backup DB
+
+on:
+  schedule:
+    - cron: "0 6 * * 0" # domingos 06:00 UTC (1:00 a. m. Colombia)
+  workflow_dispatch:
+  pull_request:
+    paths: [".github/workflows/backup.yml"]
+
+permissions:
+  contents: read
+
+# Nunca dos backups a la vez; y uno en curso no se cancela.
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    name: Dump cifrado
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.120.0 # la misma versión que usas en local
+
+      - name: Exportar roles, esquema y datos
+        env:
+          DB_URL: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          STAMP=$(date -u +%Y-%m-%d)
+          tar -czf "backup-$STAMP.tar.gz" roles.sql schema.sql data.sql
+          # La contraseña entra por stdin (--passphrase-fd 0): nunca aparece en la linea de comandos.
+          printf '%' "$PASSPHRASE" | gpg --batch --yes --pinetry-mode loopback \
+            --passphrase-fd 0 --symetric --cipher-algo AES256 \
+            -o "backup-$STAMP.tar.gz.gpg" "backup-$STAMP.tar.gz"
+          # Borra las copias sin cifrar antes de subir nada.
+          rm -f roles.sql schema.sql data.sql "backup-$STAMP.tar.gz"
+          echo "STAMP=$STAMP" >> "$GITHUB_ENV"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: db-backup-${{ env.STAMP }}
+          path: backup-*.tar.gz.gpg
+          retention-days: 56 # 8 semanas; los más viejos de borran solos
+          if-no-files-found: error # si no hay archivo, el backup falló: que se note
