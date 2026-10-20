@@ -1,12 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SessionBadge from "../auth/SessionBadge";
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-        <img src="/wgallery.png" alt="Web Gallery" width="auto" height="80" style={{ borderRadius: '55px'}} />
+          <img
+            src="/wgallery.png"
+            alt="Web Gallery"
+            width="auto"
+            height="80"
+            style={{ borderRadius: "55px" }}
+          />
         </Link>
         <button
           className="navbar-toggler"
@@ -30,7 +37,10 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link btn btn-outline-dark me-2" to="/tecnicas">
+              <Link
+                className="nav-link btn btn-outline-dark me-2"
+                to="/tecnicas"
+              >
                 Técnicas
               </Link>
             </li>
@@ -80,6 +90,7 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
+          <SessionBadge />
         </div>
       </div>
     </nav>
