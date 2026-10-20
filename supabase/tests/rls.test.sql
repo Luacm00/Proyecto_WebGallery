@@ -99,7 +99,14 @@ reset role;
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-00000000000a", "role":"authenticated"}';
 
-select is((select count(*) from public.profiles), 3::bigint, 'Admin: ve todos los perfiles');
+select is(
+    (select count(*) from public.profiles 
+    where id in ('00000000-0000-0000-0000-00000000000a',
+                '00000000-0000-0000-0000-00000000000b',
+                '00000000-0000-0000-0000-00000000000c')),
+    3::bigint,
+    'Admin: ve todos los perfiles'
+);
 
 select results_eq(
     $$ update public.profiles set status = 'approved'

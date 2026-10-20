@@ -18,7 +18,7 @@ permissions:
 jobs:
   web:
     name: Web · build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10 # si algo se cuelga, no consume minutos indefinidamente
     steps:
       - uses: actions/checkout@v5 # descarga el repo
@@ -32,7 +32,7 @@ jobs:
 
   api:
     name: API · typecheck
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5 # descarga el repo
@@ -46,7 +46,7 @@ jobs:
 
   shared:
     name: Shared · tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
@@ -61,7 +61,7 @@ jobs:
 
   db:
     name: DB · pruebas RLS
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5

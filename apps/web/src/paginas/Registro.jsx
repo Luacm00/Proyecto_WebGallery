@@ -168,6 +168,8 @@ function mensajeDeError(error) {
       return "La contraseña es demasiado débil. Usa al menos 10 caracteres.";
     case "over_email_send_rate_limit":
       return "Se enviaron demasiados correos. Espera unos minutos e intenta de nuevo.";
+    case "user_already_exists":
+      return "Ya existe una cuenta con ese correo. Inicia sesión o recupera tu contraseña.";
     default:
       // Nunca mostramos el mensaje técnico (p. ej. "Database error saving new user").
       return "No pudimos crear tu cuenta. Revisa los datos e intenta de nuevo.";
