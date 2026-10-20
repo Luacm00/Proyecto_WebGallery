@@ -59,3 +59,19 @@ export const signupSchema = z.object({
 // Dos tipos a partir del mismo esquema:
 export type SignupInput = z.input<typeof signupSchema>; // lo que llena el formulario ("300 123 4567")
 export type SignupData = z.output<typeof signupSchema>; // lo que sale validado ("+573001234567")
+
+/**
+ * Convierte los datos validados del formulario (camelCase) al JSON que
+ * espera el trigger handle_new_user (snake_case, en raw_user_meta_data).
+ * Es el ÚNICO lugar donde se escriben esos nombres en el frontend.
+ */
+export function toSignupMetadata(data: SignupData) {
+  return {
+    display_name: data.displayName,
+    full_name: data.fullName,
+    phone_e164: data.phone,
+    city: data.city ?? null,
+    whatsapp_public: data.whatsappPublic,
+    data_consent: data.dataConsent,
+  };
+}

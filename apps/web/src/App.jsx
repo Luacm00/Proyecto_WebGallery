@@ -14,6 +14,7 @@ import TizasPastel from "./componentes/categorias/TizasPastel";
 import NotFound from "./componentes/NotFound";
 
 import "./App.css";
+import Registro from "./paginas/Registro";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/categorias/carboncillo" element={<Carboncillo />} />
             <Route path="/categorias/tizas-pastel" element={<TizasPastel />} />
             <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/registro" element={<Registro />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
