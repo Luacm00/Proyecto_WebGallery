@@ -15,6 +15,9 @@ import NotFound from "./componentes/NotFound";
 
 import "./App.css";
 import Registro from "./paginas/Registro";
+import Login from "./paginas/Login";
+import Recuperar from "./paginas/Recuperar";
+import Restablecer from "./paginas/Restablecer";
 
 const App = () => {
   return (
@@ -33,6 +36,9 @@ const App = () => {
             <Route path="/categorias/tizas-pastel" element={<TizasPastel />} />
             <Route path="/nosotros" element={<Nosotros />} />
             <Route path="/registro" element={<Registro />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/recuperar" element={<Recuperar />} />
+            <Route path="/restablecer" element={<Restablecer />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

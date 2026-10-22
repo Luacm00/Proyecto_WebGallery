@@ -157,6 +157,7 @@ export default function Registro() {
           {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
         </button>
       </form>
+      <Link to="/login">¿Ya tienes cuenta? Ingresa</Link>
     </div>
   );
 }

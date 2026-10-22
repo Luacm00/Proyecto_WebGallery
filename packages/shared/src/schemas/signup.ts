@@ -2,17 +2,19 @@ import z from "zod";
 import { LIMITS } from "../limits";
 import { toE164 } from "../phone";
 
+export const passwordField = z
+  .string()
+  .min(LIMITS.password.min, {
+    error: `La contraseña debe tener al menos ${LIMITS.password.min} caracteres`,
+  })
+  .max(LIMITS.password.max, {
+    error: `Máximo ${LIMITS.password.max} caracteres`,
+  });
+
 export const signupSchema = z.object({
   email: z.email({ error: "Escribe un correo válido" }),
 
-  password: z
-    .string()
-    .min(LIMITS.password.min, {
-      error: `La contraseña debe tener al menos ${LIMITS.password.min} caracteres`,
-    })
-    .max(LIMITS.password.max, {
-      error: `Máximo ${LIMITS.password.max} caracteres`,
-    }),
+  password: passwordField,
 
   displayName: z
     .string()
