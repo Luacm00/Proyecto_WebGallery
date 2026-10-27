@@ -18,7 +18,7 @@ permissions:
 jobs:
   web:
     name: Web · build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10 # si algo se cuelga, no consume minutos indefinidamente
     steps:
       - uses: actions/checkout@v5 # descarga el repo
@@ -32,7 +32,7 @@ jobs:
 
   api:
     name: API · typecheck
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5 # descarga el repo
@@ -44,9 +44,24 @@ jobs:
       - run: pnpm install --frozen-lockfile #falla si pnpm-lock.yml no coincide con package.json
       - run: pnpm --filter api typecheck
 
+  shared:
+    name: Shared · tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @webgallery/shared typecheck
+      - run: pnpm --filter @webgallery/shared test
+
   db:
     name: DB · pruebas RLS
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5

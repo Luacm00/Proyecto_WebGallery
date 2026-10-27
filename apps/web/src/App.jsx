@@ -14,6 +14,14 @@ import TizasPastel from "./componentes/categorias/TizasPastel";
 import NotFound from "./componentes/NotFound";
 
 import "./App.css";
+import Registro from "./paginas/Registro";
+import Login from "./paginas/Login";
+import Recuperar from "./paginas/Recuperar";
+import Restablecer from "./paginas/Restablecer";
+import Panel from "./paginas/Panel";
+import Admin from "./paginas/Admin";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import Privacidad from "./paginas/Privacidad";
 
 const App = () => {
   return (
@@ -31,6 +39,27 @@ const App = () => {
             <Route path="/categorias/carboncillo" element={<Carboncillo />} />
             <Route path="/categorias/tizas-pastel" element={<TizasPastel />} />
             <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/recuperar" element={<Recuperar />} />
+            <Route path="/restablecer" element={<Restablecer />} />
+            <Route
+              path="/panel"
+              element={
+                <ProtectedRoute>
+                  <Panel />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/privacidad" element={<Privacidad />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
