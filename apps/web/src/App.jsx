@@ -21,6 +21,7 @@ import Restablecer from "./paginas/Restablecer";
 import Panel from "./paginas/Panel";
 import Admin from "./paginas/Admin";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import Privacidad from "./paginas/Privacidad";
 
 const App = () => {
   return (
@@ -58,6 +59,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="/privacidad" element={<Privacidad />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -42,6 +42,9 @@ const Footer = () => {
                   Nosotros
                 </Link>
               </li>
+              <li>
+                <Link to="/privacidad">Privacidad</Link>
+              </li>
             </ul>
           </div>
           <div className="col-md-4">
