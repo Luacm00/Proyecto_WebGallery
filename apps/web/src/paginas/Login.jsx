@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,12 +6,15 @@ import { loginSchema } from "@webgallery/shared";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../auth/AuthProvider";
 import { TextField } from "../componentes/forms/TextField";
+import { Captcha } from "../componentes/forms/Captcha";
 
 export default function Login() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [errorServidor, setErrorServidor] = useState(null);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   const {
     register,
@@ -33,8 +36,12 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
+      options: { captchaToken },
     });
     if (error) {
+      // El token ya se gastó: pedimos uno nuevo para el siguiente intento.
+      captchaRef.current?.reset();
+      setCaptchaToken(null);
       setErrorServidor(mensajeDeError(error));
       return;
     }
@@ -63,6 +70,8 @@ export default function Login() {
           error={errors.password}
         />
 
+        <Captcha ref={captchaRef} onToken={setCaptchaToken} />
+
         {errorServidor && (
           <div className="alert alert-danger" role="alert">
             {errorServidor}
@@ -72,7 +81,7 @@ export default function Login() {
         <button
           type="submit"
           className="btn btn-dark w-100 mb-3"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !captchaToken}
         >
           {isSubmitting ? "Ingresando..." : "Ingresar"}
         </button>
@@ -94,6 +103,8 @@ function mensajeDeError(error) {
       return "Correo o contraseña incorrectos."; // nunca decir cuál de los dos
     case "email_not_confirmed":
       return "Aún no confirmas tu correo. Revisa tu bandeja de entrada (y la de spam).";
+    case "captcha_failed":
+      return "No pudimos verificar que eres una persona. Intenta de nuevo.";
     default:
       return "No pudimos iniciar sesión. Intenta de nuevo en unos minutos.";
   }

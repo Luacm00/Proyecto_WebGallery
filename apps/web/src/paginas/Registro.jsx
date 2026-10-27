@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, toSignupMetadata } from "@webgallery/shared";
 import { supabase } from "../lib/supabase";
 import { TextField } from "../componentes/forms/TextField";
 import { Link } from "react-router-dom";
+import { Captcha } from "../componentes/forms/Captcha";
 
 export default function Registro() {
   const [enviado, setEnviado] = useState(false);
   const [errorServidor, setErrorServidor] = useState(null);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   const {
     register,
@@ -28,10 +31,13 @@ export default function Registro() {
       options: {
         data: toSignupMetadata(data), // -> raw_user_meta_data -> trigger
         emailRedirectTo: window.location.origin, // a dónde lleva el enlace del correo
+        captchaToken,
       },
     });
 
     if (error) {
+      captchaRef.current?.reset();
+      setCaptchaToken(null);
       setErrorServidor(mensajeDeError(error));
       return;
     }
@@ -143,6 +149,8 @@ export default function Registro() {
           )}
         </div>
 
+        <Captcha ref={captchaRef} onToken={setCaptchaToken} />
+
         {errorServidor && (
           <div className="alert alert-danger" role="alert">
             {errorServidor}
@@ -152,7 +160,7 @@ export default function Registro() {
         <button
           type="submit"
           className="btn btn-dark w-100"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !captchaToken}
         >
           {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
         </button>
@@ -171,6 +179,8 @@ function mensajeDeError(error) {
       return "Se enviaron demasiados correos. Espera unos minutos e intenta de nuevo.";
     case "user_already_exists":
       return "Ya existe una cuenta con ese correo. Inicia sesión o recupera tu contraseña.";
+    case "captcha_failed":
+      return "No pudimos verificar que eres una persona. Intenta de nuevo.";
     default:
       // Nunca mostramos el mensaje técnico (p. ej. "Database error saving new user").
       return "No pudimos crear tu cuenta. Revisa los datos e intenta de nuevo.";

@@ -1,14 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { recoverSchema } from "@webgallery/shared";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../lib/supabase";
 import { Link } from "react-router-dom";
 import { TextField } from "../componentes/forms/TextField";
+import { Captcha } from "../componentes/forms/Captcha";
 
 export default function Recuperar() {
   const [enviado, setEnviado] = useState(false);
   const [errorServidor, setErrorServidor] = useState(null);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   const {
     register,
@@ -24,11 +27,19 @@ export default function Recuperar() {
     setErrorServidor(null);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/restablecer`,
+      captchaToken,
     });
 
-    if (error?.code === "over_email_send_rate_limit") {
+    if (
+      error?.code === "over_email_send_rate_limit" ||
+      error?.code === "captcha_failed"
+    ) {
+      captchaRef.current?.reset();
+      setCaptchaToken(null);
       setErrorServidor(
-        "Se enviaron demasiados correos. Espera unos minutos e intenta de nuevo.",
+        error.code === "captcha_failed"
+          ? "No pudimos verificar que eres una persona. Intenta de nuevo."
+          : "Se enviaron demasiados correos. Espera unos minutos e intenta de nuevo.",
       );
       return;
     }
@@ -69,6 +80,8 @@ export default function Recuperar() {
           error={errors.email}
         />
 
+        <Captcha ref={captchaRef} onToken={setCaptchaToken} />
+
         {errorServidor && (
           <div className="alert alert-danger" role="alert">
             {errorServidor}
@@ -78,7 +91,7 @@ export default function Recuperar() {
         <button
           type="submit"
           className="btn btn-dark w-100 mb-3"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !captchaToken}
         >
           {isSubmitting ? "Enviando..." : "Enviar enlace"}
         </button>
