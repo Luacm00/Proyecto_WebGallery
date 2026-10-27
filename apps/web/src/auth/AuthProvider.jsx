@@ -1,33 +1,59 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { apiFetch } from "../lib/api";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true); // true hasta saber si hay sesión guardada
+  const [sessionLoading, setSessionLoading] = useState(true); // true hasta saber si hay sesión guardada
+  const [perfil, setPerfil] = useState({ estado: "inactivo", datos: null }); // estado: "inactivo" (sin usuario) | "cargando" | "listo" | "error"
 
+  // 1. Sesión
   useEffect(() => {
-    // 1. ¿Había una sesión guardada de antes?
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
-      setLoading(false);
+      setSessionLoading(false);
     });
-
-    // 2. Escuchar cambios: login, logout, renovación del token, confirmación de correo.
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
     });
-
-    // 3. Limpieza: si el Provider se desmonta, dejar de escuchar.
     return () => subscription.unsubscribe();
-  }, []); // [] = ejecutar una sola vez, al montar
+  }, []);
+
+  // 2. Perfil: se pide a la API cada vez que CAMBIA EL USUARIO
+  const userId = session?.user?.id;
+  useEffect(() => {
+    if (!userId) {
+      setPerfil({ estado: "inactivo", datos: null });
+      return;
+    }
+    let cancelado = false;
+    setPerfil({ estado: "cargando", datos: null });
+    apiFetch("/me", { token: session.access_token })
+      .then((datos) => {
+        if (!cancelado) setPerfil({ estado: "listo", datos });
+      })
+      .catch(() => {
+        if (!cancelado) setPerfil({ estado: "error", datos: null });
+      });
+    return () => {
+      cancelado = true;
+    };
+  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Cargando = no sabemos aún si hay sesión, O hay usuario pero su perfil aún no llega.
+  const loading =
+    sessionLoading ||
+    (!!userId && (perfil.estado === "inactivo" || perfil.estado === "cargando"));
 
   const value = {
     session,
     user: session?.user ?? null,
+    profile: perfil.datos,
+    profileError: perfil.estado === "error",
     loading,
     signOut: () => supabase.auth.signOut(),
   };

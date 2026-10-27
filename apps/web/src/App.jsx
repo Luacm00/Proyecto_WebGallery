@@ -18,6 +18,9 @@ import Registro from "./paginas/Registro";
 import Login from "./paginas/Login";
 import Recuperar from "./paginas/Recuperar";
 import Restablecer from "./paginas/Restablecer";
+import Panel from "./paginas/Panel";
+import Admin from "./paginas/Admin";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 const App = () => {
   return (
@@ -39,6 +42,22 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/recuperar" element={<Recuperar />} />
             <Route path="/restablecer" element={<Restablecer />} />
+            <Route
+              path="/panel"
+              element={
+                <ProtectedRoute>
+                  <Panel />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
