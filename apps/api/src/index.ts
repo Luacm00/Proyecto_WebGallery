@@ -7,6 +7,7 @@ import { corsMiddleware } from "./middleware/cors";
 import { healthRoutes } from "./modules/health/routes";
 import { errorHandler, notFoundHandler } from "./middleware/errors";
 import { meRoutes } from "./modules/me/routes";
+import { catalogRoutes } from "./modules/catalog/routes";
 
 const app = new Hono<AppEnv>();
 
@@ -18,6 +19,7 @@ app.use("*", corsMiddleware); // 4. permisos entre dominios
 // Módulos
 app.route("/health", healthRoutes);
 app.route("/me", meRoutes);
+app.route("/catalog", catalogRoutes);
 
 // Manejo de errores
 app.notFound(notFoundHandler);

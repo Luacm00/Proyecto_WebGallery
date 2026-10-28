@@ -9,3 +9,14 @@ export function supabaseComoUsuario(env: Env, token: string) {
     auth: { persistSession: false, autoRefreshToken: false }, // en el servidor no hay sesión que guardar
   });
 }
+
+/**
+ * Cliente ANÓNIMO, para datos públicos: Postgres lo trata como un visitante (rol anon),
+ * así que solo puede leer lo que exponen las vistas públicas.
+ */
+export function supabasePublico(env: Env) {
+  return createClient(env.SUPABASE_URL, env.SUPABASE_PUBLISHABLE_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
+
