@@ -57,3 +57,9 @@ from (values
   ('tizas-pastel', 'Rostro colorido', 'tizap2.jpg', 10)
 ) as v(slug, title, image_key, dias)
 join public.categories c on c.slug = v.slug;
+
+-- Portadas de las categorías (solo local; mismas imágenes de terceros de public/img).
+update public.categories c set cover_key = v.cover
+from (values ('oleo', 't-oleo.webp'), ('acrilico', 't-acrilico.jpg'), ('vinilo', 't-vinilo.jpg'),
+             ('carboncillo', 't-carbon.png'), ('tizas-pastel', 't-tizas.jpg')) as v(slug, cover)
+where c.slug = v.slug;

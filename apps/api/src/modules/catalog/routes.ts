@@ -63,7 +63,6 @@ catalogRoutes.get("/artists/:id", async (c) => {
   return c.json(artist);
 });
 
-//   GET /artists/:id/artworks  → como /categories/:slug/artworks, pero con el filtro { artistId: id }
 catalogRoutes.get("/artists/:id/artworks", async (c) => {
   const id = validar(idSchema, c.req.param("id"));
   const raw = c.req.query("cursor");

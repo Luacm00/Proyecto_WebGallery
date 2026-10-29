@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SessionBadge from "../auth/SessionBadge";
+import { useCategories } from "../catalogo/queries";
 
 const Navbar = () => {
   return (
@@ -54,34 +55,7 @@ const Navbar = () => {
                 Categorías
               </button>
               <ul className="dropdown-menu">
-                <li>
-                  <Link className="dropdown-item" to="/categorias/oleo">
-                    Óleo
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/categorias/acrilico">
-                    Acrílico
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/categorias/vinilo">
-                    Vinilo
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/categorias/carboncillo">
-                    Carboncillo
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/categorias/tizas-pastel">
-                    Tizas Pastel
-                  </Link>
-                </li>
+                <CategoriasMenu />
               </ul>
             </li>
             <li className="nav-item">
@@ -96,5 +70,34 @@ const Navbar = () => {
     </nav>
   );
 };
+
+function CategoriasMenu() {
+  const { data: categorias, isPending, isError } = useCategories();
+
+  if (isPending) {
+    return (
+      <li>
+        <span className="dropdown-item disabled">Cargando...</span>
+      </li>
+    );
+  }
+  // Si la API falla, el menú no queda vacio: lleva a la página de categorias.
+  if (isError) {
+    return (
+      <li>
+        <Link className="dropdown-item" to="/categorias">
+          Ver categorías
+        </Link>
+      </li>
+    );
+  }
+  return categorias.map((c) => (
+    <li key={c.slug}>
+      <Link className="dropdown-item" to={`/categorias/${c.slug}`}>
+        {c.name}
+      </Link>
+    </li>
+  ));
+}
 
 export default Navbar;
