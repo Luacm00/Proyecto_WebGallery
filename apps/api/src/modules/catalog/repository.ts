@@ -32,7 +32,7 @@ function toArtwork(env: Env, r: ArtworkRow) {
     title: r.title,
     description: r.description,
     year: r.year,
-    dimensions: r.description,
+    dimensions: r.dimensions,
     imageUrl: mediaUrl(env, r.image_key),
     width: r.width,
     height: r.height,
@@ -107,7 +107,7 @@ export async function listArtworks(
   if (cursor) {
     // "más antiguas que la ultima vista", con el id como desempate
     q = q.or(
-      `approved_at.lt."${cursor}",and(approved_at.eq."${cursor.t}",id.lt.${cursor.id})`,
+      `approved_at.lt."${cursor.t}",and(approved_at.eq."${cursor.t}",id.lt.${cursor.id})`,
     );
   }
 
@@ -140,7 +140,7 @@ export async function getArtwork(db: SupabaseClient, env: Env, id: string) {
 
 export async function getArtist(db: SupabaseClient, env: Env, id: string) {
   const { data, error } = await db
-    .from("public_artist")
+    .from("public_artists")
     .select("id, display_name, city, bio, avatar_key, whatsapp")
     .eq("id", id)
     .maybeSingle();

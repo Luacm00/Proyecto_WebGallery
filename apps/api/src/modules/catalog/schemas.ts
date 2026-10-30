@@ -8,11 +8,11 @@ export const slugSchema = z
   .string()
   .max(60)
   .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
-export const idSchema = z.uuid();
+export const idSchema = z.guid();
 
 const cursorSchema = z.object({
   t: z.iso.datetime({ offset: true }), // approved_at de la última obra vista
-  id: z.uuid(),
+  id: idSchema,
 });
 export type Cursor = z.infer<typeof cursorSchema>;
 

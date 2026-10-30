@@ -1,32 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCategories } from "../catalogo/queries";
+import ErrorCarga from "./estado/ErrorCarga";
+import Cargando from "./estado/Cargando";
 
 export default function Categorias() {
   const { data: categorias, isPending, isError, refetch } = useCategories();
 
   if (isPending) {
-    return (
-      <div className="container my-5 text-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    );
+    return <Cargando />;
   }
   if (isError) {
-    return (
-      <div className="container my-5 text-center">
-        <p>Error al cargar, intente nuevamente.</p>
-        <button
-          type="button"
-          className="btn btn-outline-dark"
-          onClick={() => refetch()}
-        >
-          Reintentar
-        </button>
-      </div>
-    );
+    return <ErrorCarga onReintentar={refetch} />;
   }
 
   return (

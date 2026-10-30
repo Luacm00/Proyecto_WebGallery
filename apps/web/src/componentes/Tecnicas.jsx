@@ -1,31 +1,16 @@
 import { useCategories } from "../catalogo/queries";
 import BackToHomeButton from "./BackToHomeButton";
+import Cargando from "./estado/Cargando";
+import ErrorCarga from "./estado/ErrorCarga";
 
 export default function Tecnicas() {
   const { data: tecnicas, isPending, isError, refetch } = useCategories();
 
   if (isPending) {
-    return (
-      <div className="container my-5 text-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    );
+    return <Cargando />;
   }
   if (isError) {
-    return (
-      <div className="container my-5 text-center">
-        <p>No pudimos cargar las técnicas.</p>
-        <button
-          type="button"
-          className="btn btn-outline-dark"
-          onClick={() => refetch()}
-        >
-          Reintentar
-        </button>
-      </div>
-    );
+    return <ErrorCarga onReintentar={refetch} />;
   }
 
   return (
