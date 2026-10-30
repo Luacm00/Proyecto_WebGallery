@@ -49,7 +49,7 @@ const Footer = () => {
           </div>
           <div className="col-md-4">
             <h5>Contacto</h5>
-            <p>Email: contacto@webgallery.com</p>
+            <p>Email: web.gallery.contacto@gmail.com</p>
             <p>Teléfono: +123 456 789</p>
             <div className="d-flex">
               <a
