@@ -29,3 +29,5 @@ PLAN.md
 
 .wrangler/
 .dev.vars
+
+supabase/snippets

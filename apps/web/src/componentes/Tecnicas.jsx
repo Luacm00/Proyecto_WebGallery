@@ -1,49 +1,40 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useCategories } from "../catalogo/queries";
 import BackToHomeButton from "./BackToHomeButton";
+import Cargando from "./estado/Cargando";
+import ErrorCarga from "./estado/ErrorCarga";
 
-const Tecnicas = () => {
+export default function Tecnicas() {
+  const { data: tecnicas, isPending, isError, refetch } = useCategories();
+
+  if (isPending) {
+    return <Cargando />;
+  }
+  if (isError) {
+    return <ErrorCarga onReintentar={refetch} />;
+  }
+
   return (
     <div>
       <div className="container-fluid mt-3">
         <div className="row">
-          {/* Sidebar */}
+          {/* Menú lateral: un enlace por técnica, al ancla de su sección */}
           <nav
             id="sidebarMenu"
-            className="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse "
+            className="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse"
           >
             <div className="position-sticky">
               <ul className="nav flex-column mt-5">
-                <li className="nav-item">
-                  <a className="nav-link" href="#oleo">
-                    Óleo
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#acrilico">
-                    Acrílico
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#vinilo">
-                    Vinilo
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#carboncillo">
-                    Carboncillo
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#tizas">
-                    Tizas Pastel
-                  </a>
-                </li>
+                {tecnicas.map((t) => (
+                  <li key={t.slug} className="nav-item">
+                    <a className="nav-link" href={`#${t.slug}`}>
+                      {t.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </nav>
 
-          {/* Main Content */}
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <button
               className="btn btn-secondary d-md-none mb-3"
@@ -52,163 +43,46 @@ const Tecnicas = () => {
               data-bs-target="#sidebarMenu"
               aria-controls="sidebarMenu"
               aria-expanded="false"
-              aria-label="Toggle navigation"
+              aria-label="Mostrar menú de técnicas"
             >
               <i className="bi bi-list"></i> Menú de técnicas
             </button>
+
             <div className="d-flex flex-column align-items-center">
               <h1 className="display-3 text-center fw-bold mb-5">Técnicas</h1>
 
-              {/* Técnica Óleo */}
-              <section id="oleo" className="mb-5 w-100">
-                <div className="card">
-                  <img
-                    src="/img/t-oleo.webp"
-                    className="card-img-top"
-                    alt="Óleo"
-                    style={{ height: "400px", objectFit: "cover" }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">Óleo</h5>
-                    <p className="card-text">
-                      El óleo es una técnica de pintura que utiliza pigmentos
-                      mezclados con aceites. Es conocida por su capacidad de
-                      crear detalles y su durabilidad.
-                    </p>
-                    <h6>¿Cómo se emplea?</h6>
-                    <p>
-                      Se aplica sobre lienzo, madera o paneles, utilizando
-                      pinceles, espátulas y otros utensilios.
-                    </p>
-                    <h6>¿Qué se necesita?</h6>
-                    <p>
-                      Pigmentos de óleo, aceites (como aceite de linaza),
-                      lienzos o paneles, pinceles, y medios para mezclar.
-                    </p>
-                  </div>
-                </div>
-              </section>
+              {tecnicas.map((t) => (
+                <section key={t.slug} id={t.slug} className="mb-5 w-100">
+                  <div className="card">
+                    {t.coverUrl && (
+                      <img
+                        src={t.coverUrl}
+                        alt={t.name}
+                        className="card-img-top"
+                        loading="lazy"
+                        style={{ height: 400, objectFit: "cover" }}
+                      />
+                    )}
+                    <div className="card-body">
+                      <h2 className="card-title h5">{t.name}</h2>
+                      <p className="card-text">{t.description}</p>
 
-              {/* Técnica Acrílico */}
-              <section id="acrilico" className="mb-5 w-100">
-                <div className="card">
-                  <img
-                    src="/img/t-acrilico.jpg"
-                    className="card-img-top"
-                    alt="Acrílico"
-                    style={{ height: "400px", objectFit: "cover" }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">Acrílico</h5>
-                    <p className="card-text">
-                      La pintura acrílica es conocida por su rápido secado y su
-                      versatilidad, pudiendo imitar acuarelas, óleos y otros
-                      estilos.
-                    </p>
-                    <h6>¿Cómo se emplea?</h6>
-                    <p>
-                      Se puede aplicar en lienzo, madera, papel y otros soportes
-                      usando pinceles, espátulas, o incluso directamente con las
-                      manos.
-                    </p>
-                    <h6>¿Qué se necesita?</h6>
-                    <p>
-                      Pinturas acrílicas, pinceles, paletas para mezclar, agua
-                      para diluir y diversos soportes como lienzo o papel.
-                    </p>
+                      {t.howTo && (
+                        <>
+                          <h3 className="h6">¿Cómo se emplea?</h3>
+                          <p>{t.howTo}</p>
+                        </>
+                      )}
+                      {t.materials && (
+                        <>
+                          <h3 className="h6">¿Qué se necesita?</h3>
+                          <p>{t.materials}</p>
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </section>
-
-              {/* Técnica Vinilo */}
-              <section id="vinilo" className="mb-5 w-100">
-                <div className="card">
-                  <img
-                    src="/img/t-vinilo.jpg"
-                    className="card-img-top"
-                    alt="Vinilo"
-                    style={{ height: "400px", objectFit: "cover" }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">Vinilo</h5>
-                    <p className="card-text">
-                      La pintura vinílica es similar al acrílico, pero con una
-                      base de acetato de polivinilo. Es muy utilizada en la
-                      decoración mural.
-                    </p>
-                    <h6>¿Cómo se emplea?</h6>
-                    <p>
-                      Se aplica generalmente en paredes y grandes superficies
-                      utilizando rodillos, pinceles y aerosoles.
-                    </p>
-                    <h6>¿Qué se necesita?</h6>
-                    <p>
-                      Pintura vinílica, rodillos, pinceles, cintas adhesivas
-                      para delimitar áreas, y agua para limpiar.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Técnica Carboncillo */}
-              <section id="carboncillo" className="mb-5 w-100">
-                <div className="card">
-                  <img
-                    src="/img/t-carbon.png"
-                    className="card-img-top"
-                    alt="Carboncillo"
-                    style={{ height: "400px", objectFit: "cover" }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">Carboncillo</h5>
-                    <p className="card-text">
-                      El carboncillo es una técnica de dibujo que utiliza
-                      varillas de carbón. Es muy apreciada por sus tonos
-                      profundos y la capacidad de sombreado.
-                    </p>
-                    <h6>¿Cómo se emplea?</h6>
-                    <p>
-                      Se utiliza sobre papel o lienzo, y es ideal para bocetos
-                      rápidos y dibujos detallados.
-                    </p>
-                    <h6>¿Qué se necesita?</h6>
-                    <p>
-                      Carboncillo, papel especial para carboncillo, goma de
-                      borrar maleable, fijador para carboncillo.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Técnica Tizas Pastel */}
-              <section id="tizas" className="mb-5 w-100">
-                <div className="card">
-                  <img
-                    src="/img/t-tizas.jpg"
-                    className="card-img-top"
-                    alt="Tizas Pastel"
-                    style={{ height: "400px", objectFit: "cover" }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">Tizas Pastel</h5>
-                    <p className="card-text">
-                      Las tizas pastel son utilizadas para crear obras con
-                      colores vibrantes y texturas suaves. Es una técnica ideal
-                      para retratos y paisajes.
-                    </p>
-                    <h6>¿Cómo se emplea?</h6>
-                    <p>
-                      Se aplica sobre papel rugoso o liso, permitiendo mezclas
-                      de colores con los dedos o herramientas especiales.
-                    </p>
-                    <h6>¿Qué se necesita?</h6>
-                    <p>
-                      Tizas pastel, papel para pasteles, fijador para pasteles,
-                      y herramientas de mezcla como difuminos o esfuminos.
-                    </p>
-                  </div>
-                </div>
-              </section>
+                </section>
+              ))}
             </div>
           </main>
         </div>
@@ -217,6 +91,4 @@ const Tecnicas = () => {
       <br />
     </div>
   );
-};
-
-export default Tecnicas;
+}

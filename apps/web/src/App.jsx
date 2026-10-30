@@ -6,11 +6,6 @@ import Tecnicas from "./componentes/Tecnicas";
 import Categorias from "./componentes/Categorias";
 import Nosotros from "./componentes/Nosotros";
 import Footer from "./componentes/Footer";
-import Oleo from "./componentes/categorias/Oleo";
-import Acrilico from "./componentes/categorias/Acrilico";
-import Vinilo from "./componentes/categorias/Vinilo";
-import Carboncillo from "./componentes/categorias/Carboncillo";
-import TizasPastel from "./componentes/categorias/TizasPastel";
 import NotFound from "./componentes/NotFound";
 
 import "./App.css";
@@ -22,6 +17,9 @@ import Panel from "./paginas/Panel";
 import Admin from "./paginas/Admin";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Privacidad from "./paginas/Privacidad";
+import CategoriaDetalle from "./paginas/CategoriaDetalle";
+import ObraDetalle from "./paginas/ObraDetalle";
+import ArtistaDetalle from "./paginas/ArtistaDetalle";
 
 const App = () => {
   return (
@@ -33,11 +31,7 @@ const App = () => {
             <Route path="/" element={<Inicio />} />
             <Route path="/categorias" element={<Categorias />} />
             <Route path="/tecnicas" element={<Tecnicas />} />
-            <Route path="/categorias/oleo" element={<Oleo />} />
-            <Route path="/categorias/acrilico" element={<Acrilico />} />
-            <Route path="/categorias/vinilo" element={<Vinilo />} />
-            <Route path="/categorias/carboncillo" element={<Carboncillo />} />
-            <Route path="/categorias/tizas-pastel" element={<TizasPastel />} />
+            <Route path="/categorias/:slug" element={<CategoriaDetalle />} />
             <Route path="/nosotros" element={<Nosotros />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/login" element={<Login />} />
@@ -60,6 +54,8 @@ const App = () => {
               }
             />
             <Route path="/privacidad" element={<Privacidad />} />
+            <Route path="/obras/:id" element={<ObraDetalle />} />
+            <Route path="/artistas/:id" element={<ArtistaDetalle />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

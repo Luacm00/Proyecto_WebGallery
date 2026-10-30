@@ -36,3 +36,30 @@ insert into public.artworks (id, artist_id, category_id, title, image_key, statu
 values ('00000000-0000-0000-0000-0000000000f1', '00000000-0000-0000-0000-00000000000b',
         (select id from public.categories where slug = 'categoria-prueba'),
         'Atardecer', 'ana/atardecer.webp', 'approved', now());
+
+--Ana con whatsapp público, para ver el botón en local.
+update public.profiles set whatsapp_public = true where id = '00000000-0000-0000-0000-00000000000b';
+
+-- Obras de ejemplo con las imagenes de public/img (MEDIA_BASE_URL local = http://localhost:3000/img).
+-- ⚠️ Solo local: son imágenes de terceros, nunca van a producción.
+insert into public.artworks (artist_id, category_id, title, image_key, status, approved_at)
+select '00000000-0000-0000-0000-00000000000b', c.id, v.title, v.image_key, 'approved', now() - v.dias * interval '1 day'
+from (values
+  ('oleo',     'Retrato en óleo',   'oleo1.jpg',     1),
+  ('oleo',     'Paisaje en óleo',   'oleo2.jpg',     2),
+  ('acrilico', 'Abstracto acrílico', 'acrilico1.webp', 3),
+  ('acrilico', 'Formas en acrílico', 'acrilico3.webp', 4),
+  ('vinilo', 'Anochecer', 'vinilo1.jpg', 5),
+  ('vinilo', 'Retrato', 'vinilo2.jpg', 6),
+  ('carboncillo', 'Retrato atrayente', 'carbon2.png', 7),
+  ('carboncillo', 'Elefante', 'carbon3.webp', 8),
+  ('tizas-pastel', 'Retrato niña', 'tizap1.jpg', 9),
+  ('tizas-pastel', 'Rostro colorido', 'tizap2.jpg', 10)
+) as v(slug, title, image_key, dias)
+join public.categories c on c.slug = v.slug;
+
+-- Portadas de las categorías (solo local; mismas imágenes de terceros de public/img).
+update public.categories c set cover_key = v.cover
+from (values ('oleo', 't-oleo.webp'), ('acrilico', 't-acrilico.jpg'), ('vinilo', 't-vinilo.jpg'),
+             ('carboncillo', 't-carbon.png'), ('tizas-pastel', 't-tizas.jpg')) as v(slug, cover)
+where c.slug = v.slug;

@@ -1,5 +1,6 @@
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+import Cargando from "../componentes/estado/Cargando";
 
 /**
  * Envuelve una ruta que requiere sesión.
@@ -16,13 +17,7 @@ export default function ProtectedRoute({
   const location = useLocation();
 
   if (loading) {
-    return (
-      <div className="container my-5 text-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    );
+    return <Cargando />;
   }
 
   // Sin sesión: al login, recordando a donde queria ir (Login ya usa state.from).
