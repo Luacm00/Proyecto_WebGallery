@@ -18,6 +18,8 @@ import Admin from "./paginas/Admin";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Privacidad from "./paginas/Privacidad";
 import CategoriaDetalle from "./paginas/CategoriaDetalle";
+import ObraDetalle from "./paginas/ObraDetalle";
+import ArtistaDetalle from "./paginas/ArtistaDetalle";
 
 const App = () => {
   return (
@@ -52,6 +54,8 @@ const App = () => {
               }
             />
             <Route path="/privacidad" element={<Privacidad />} />
+            <Route path="/obras/:id" element={<ObraDetalle />} />
+            <Route path="/artistas/:id" element={<ArtistaDetalle />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
